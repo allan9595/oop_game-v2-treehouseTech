@@ -37,23 +37,22 @@
 
     startGame(){    
         $("#overlay").hide();
-        this.activePhrase  = this.getRandomPhrase();
-        const phrase = new Phrase(this.activePhrase.phrase);
-        phrase.addPhraseToDisplay();
-        
+        this.activePhrase  = new Phrase(this.getRandomPhrase().phrase);
+        this.activePhrase.addPhraseToDisplay();
     }
 
     handleInteraction(button){
-        //console.log($(button).text())
-        const phrase = new Phrase(this.activePhrase.phrase);
-        //console.log(phrase.phrase)
-        
-        if(phrase.phrase.includes($(button).text()) === false){
+
+        console.log(this.activePhrase.phrase);
+        //console.log(this.activePhrase);
+        if(this.activePhrase.phrase.includes($(button).text()) === false){
             $(button).addClass('wrong');
             $(button).prop('disabled', true);
             this.removeLife();
         } 
-        if(phrase.phrase.includes($(button).text())){
+
+        
+        if(this.activePhrase.phrase.includes($(button).text())){
             $(button).addClass('chosen');
             $(button).prop('disabled', true);
             phrase.showMatchedLetter($(button).text());
@@ -63,13 +62,16 @@
         }
         
     }
+
+    
     //phrase.phrase needs to be reset
     handleInteractionKeyboard(key){
-        //console.log($(button).text())
-        const phrase = new Phrase(this.activePhrase.phrase);
-        console.log(phrase.phrase)
         
-        if(phrase.phrase.includes(key) === false){
+        console.log(this.activePhrase.phrase);
+        
+
+
+        if(this.activePhrase.phrase.includes(key) === false){
             $(".keyrow button").each((index, element)=>{
                 if($(element).text()===key){
                     $(element).addClass('wrong');
@@ -78,22 +80,29 @@
             })
             this.removeLife();
         } 
-        if(phrase.phrase.includes(key)){
+
+
+        if(this.activePhrase.phrase.includes(key)){
+
             $(".keyrow button").each((index, element)=>{
                 if($(element).text()===key){
                     $(element).addClass('chosen');
                     $(element).prop('disabled', true);
                 }
             })
-            phrase.showMatchedLetter(key);
+
+            this.activePhrase.showMatchedLetter(key);
+
             if(this.checkForWin() === true){
                 this.gameOver(true);
-                phrase.phrase = "";
             };
         }
         
+        
     }
     
+
+
     checkForWin(){
         let count = 0;
         $("#phrase ul li").each((index, element) => {
@@ -114,7 +123,6 @@
         
         $(".tries")[this.missed].remove(); //first missing 
         $('<li class="tries"><img src="images/lostHeart.png" alt="Heart Icon" height="35" width="30"></li>').insertBefore($("#scoreboard ol li")[this.missed]);
-        //console.log(this.missed);
         this.missed +=1;
         if(this.missed === 5){
             this.gameOver(false);
@@ -122,51 +130,38 @@
     }
     //reset issue needs to be solve
     gameOver(gameWon){
+
         if(gameWon === false){
-            $("#overlay").removeClass("start");
             $("#overlay").removeClass("win");
             $("#overlay").addClass("lose");
             $("#game-over-message").text("Sorry, better luck next time!");
             $("#overlay").show();
-            $("#phrase ul")[0].remove()
-            $("#phrase").append('<ul></ul>');
-            console.log($(".keyrow button"))
-            $(".keyrow button").each((index, element) => {
-                console.log($(element)[1]);
-                $(element).removeClass("chosen");
-                $(element).removeClass("wrong");
-                $(element).prop("disabled",false);
-            })
-            this.missed = 0;
-            $(".tries").each((index,element)=>{
-                $(element).remove();
-            })
-            for(let i=0;i<5;i++){
-                $("#scoreboard ol").append('<li class="tries"><img src="images/liveHeart.png" alt="Heart Icon" height="35" width="30"></li>')
-            }
-            
         }
         if(gameWon === true){
-            $("#overlay").removeClass("start");
             $("#overlay").removeClass("lose");
             $("#overlay").addClass("win");
             $("#game-over-message").text("Great Job!");
             $("#overlay").show();
-            $("#phrase ul")[0].remove()
-            $("#phrase").append('<ul></ul>');
-            $(".keyrow button").each((index, element) => {
-                $(element).removeClass("chosen");
-                $(element).removeClass("wrong");
-                $(element).prop("disabled",false);
-            })
-            this.missed = 0;
-            $(".tries").each((index,element)=>{
-                $(element).remove();
-            })
-            for(let i=0;i<5;i++){
-                $("#scoreboard ol").append('<li class="tries"><img src="images/liveHeart.png" alt="Heart Icon" height="35" width="30"></li>')
-            }
+           
         }
+
+        $("#overlay").removeClass("start");
+        $("#phrase ul")[0].remove()
+        $("#phrase").append('<ul></ul>');
+        console.log($(".keyrow button"))
+        $(".keyrow button").each((index, element) => {
+            $(element).removeClass("chosen");
+            $(element).removeClass("wrong");
+            $(element).prop("disabled",false);
+        })
+        
+        this.missed = 0;
+        $(".tries").each((index,element)=>{
+            $(element).remove();
+        })
+        for(let i=0;i<5;i++){
+            $("#scoreboard ol").append('<li class="tries"><img src="images/liveHeart.png" alt="Heart Icon" height="35" width="30"></li>')
+        }      
     }
  }
 
