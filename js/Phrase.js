@@ -20,4 +20,23 @@
             }
         })
     }
+
+    checkLetter(letter){
+       for(let i=0;i<this.phrase.length;i++){
+           if(letter === this.phrase[i]){
+               return true;
+           } else {
+               return false;
+           }
+       }
+    }
+
+    showMatchedLetter(letter){
+        $("#phrase ul li").each((index, element) => {
+            if($(element).text() === letter){
+                $(element).removeClass(`hide letter ${$(element).text()}`);
+                $(element).addClass(`show letter ${$(element).text()}`);
+            } 
+        })
+    }
  }
