@@ -63,11 +63,11 @@
         }
         
     }
-    
+    //phrase.phrase needs to be reset
     handleInteractionKeyboard(key){
         //console.log($(button).text())
         const phrase = new Phrase(this.activePhrase.phrase);
-        //console.log(phrase.phrase)
+        console.log(phrase.phrase)
         
         if(phrase.phrase.includes(key) === false){
             $(".keyrow button").each((index, element)=>{
@@ -88,13 +88,14 @@
             phrase.showMatchedLetter(key);
             if(this.checkForWin() === true){
                 this.gameOver(true);
+                phrase.phrase = "";
             };
         }
         
     }
     
     checkForWin(){
-        let count = 0
+        let count = 0;
         $("#phrase ul li").each((index, element) => {
             if($(element).attr('class') === `show letter ${$(element).text()}`){
                 count +=1;
@@ -119,16 +120,19 @@
             this.gameOver(false);
         }
     }
+    //reset issue needs to be solve
     gameOver(gameWon){
         if(gameWon === false){
             $("#overlay").removeClass("start");
+            $("#overlay").removeClass("win");
             $("#overlay").addClass("lose");
             $("#game-over-message").text("Sorry, better luck next time!");
             $("#overlay").show();
             $("#phrase ul")[0].remove()
             $("#phrase").append('<ul></ul>');
-            //console.log($(".keyrow button"))
+            console.log($(".keyrow button"))
             $(".keyrow button").each((index, element) => {
+                console.log($(element)[1]);
                 $(element).removeClass("chosen");
                 $(element).removeClass("wrong");
                 $(element).prop("disabled",false);
@@ -144,6 +148,7 @@
         }
         if(gameWon === true){
             $("#overlay").removeClass("start");
+            $("#overlay").removeClass("lose");
             $("#overlay").addClass("win");
             $("#game-over-message").text("Great Job!");
             $("#overlay").show();
