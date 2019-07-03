@@ -38,9 +38,10 @@
     startGame(){    
         $("#overlay").hide();
         this.activePhrase  = new Phrase(this.getRandomPhrase().phrase);
+        console.log(this.activePhrase);
         this.activePhrase.addPhraseToDisplay();
     }
-
+    
     handleInteraction(button){
 
         //console.log(this.activePhrase.phrase);
@@ -55,19 +56,19 @@
         if(this.activePhrase.phrase.includes($(button).text())){
             $(button).addClass('chosen');
             $(button).prop('disabled', true);
-            phrase.showMatchedLetter($(button).text());
+            this.activePhrase.showMatchedLetter($(button).text());
             if(this.checkForWin() === true){
                 this.gameOver(true);
             };
         }
         
     }
-
+    
 
     //phrase.phrase needs to be reset
     handleInteractionKeyboard(key){
         
-        //console.log(this.activePhrase.phrase);
+        console.log(this.activePhrase.phrase);
         
         if(this.activePhrase.phrase.includes(key) === false){
             $(".keyrow button").each((index, element)=>{
@@ -131,21 +132,18 @@
         if(gameWon === false){
             $("#overlay").removeClass("win");
             $("#overlay").addClass("lose");
-            $("#game-over-message").text("Sorry, better luck next time!");
-            $("#overlay").show();
+            $("#game-over-message").text("Sorry, better luck next time!");       
         }
         if(gameWon === true){
             $("#overlay").removeClass("lose");
             $("#overlay").addClass("win");
-            $("#game-over-message").text("Great Job!");
-            $("#overlay").show();
-           
+            $("#game-over-message").text("Great Job!");    
         }
 
         $("#overlay").removeClass("start");
         $("#phrase ul")[0].remove()
         $("#phrase").append('<ul></ul>');
-        //console.log($(".keyrow button"))
+        $("#overlay").show();
         $(".keyrow button").each((index, element) => {
             $(element).removeClass("chosen");
             $(element).removeClass("wrong");
@@ -159,7 +157,7 @@
         for(let i=0;i<5;i++){
             $("#scoreboard ol").append('<li class="tries"><img src="images/liveHeart.png" alt="Heart Icon" height="35" width="30"></li>')
         }
-        this.activePhrase = null;      
+        this.activePhrase = null;    
     }
  }
 

@@ -5,7 +5,7 @@
 $("#btn__reset").on('click', () => {
     const game = new Game();
     game.startGame();
-   
+    
     $(".keyrow button").on('click',(e) => {
         game.handleInteraction(e.target);
     })
