@@ -96,6 +96,7 @@
                 this.gameOver(true);
             };
         }
+        
     }
     
 
@@ -156,8 +157,7 @@
         })
         for(let i=0;i<5;i++){
             $("#scoreboard ol").append('<li class="tries"><img src="images/liveHeart.png" alt="Heart Icon" height="35" width="30"></li>')
-        }
-        this.activePhrase = null;    
+        }    
     }
  }
 
