@@ -43,7 +43,7 @@
 
     handleInteraction(button){
 
-        console.log(this.activePhrase.phrase);
+        //console.log(this.activePhrase.phrase);
         //console.log(this.activePhrase);
         if(this.activePhrase.phrase.includes($(button).text()) === false){
             $(button).addClass('wrong');
@@ -63,14 +63,12 @@
         
     }
 
-    
+
     //phrase.phrase needs to be reset
     handleInteractionKeyboard(key){
         
-        console.log(this.activePhrase.phrase);
+        //console.log(this.activePhrase.phrase);
         
-
-
         if(this.activePhrase.phrase.includes(key) === false){
             $(".keyrow button").each((index, element)=>{
                 if($(element).text()===key){
@@ -97,8 +95,6 @@
                 this.gameOver(true);
             };
         }
-        
-        
     }
     
 
@@ -119,6 +115,7 @@
             return true;
         } 
     }
+
     removeLife(){
         
         $(".tries")[this.missed].remove(); //first missing 
@@ -148,7 +145,7 @@
         $("#overlay").removeClass("start");
         $("#phrase ul")[0].remove()
         $("#phrase").append('<ul></ul>');
-        console.log($(".keyrow button"))
+        //console.log($(".keyrow button"))
         $(".keyrow button").each((index, element) => {
             $(element).removeClass("chosen");
             $(element).removeClass("wrong");
@@ -161,7 +158,8 @@
         })
         for(let i=0;i<5;i++){
             $("#scoreboard ol").append('<li class="tries"><img src="images/liveHeart.png" alt="Heart Icon" height="35" width="30"></li>')
-        }      
+        }
+        this.activePhrase = null;      
     }
  }
 
