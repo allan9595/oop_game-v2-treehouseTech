@@ -12,6 +12,7 @@
             //add all phrase letter by letter into the ul list
             $("#phrase ul").append(`<li>${this.phrase[i]}</li>`);
         }
+        
         $("#phrase ul li").each((index, element) => {
             if($(element).text() !== " "){
                 //applying class, initially all are hide letter

@@ -8,17 +8,16 @@ $(document).ready(()=>{
 })
 
 
-let game = new Game();
 $("#btn__reset").on('click', () => {
-    
+    game = new Game();
     game.startGame(); //start the game
-        
+  
 })
 
 $(".keyrow button").on('click',(e) => {
-    game.handleInteraction(e.target); //if user use button
+    game.handleInteraction(e.target,null); //if user use button
 })
 
 document.addEventListener('keyup',(e)=>{
-    game.handleInteractionKeyboard(e.key); //if user use keyboard
+    game.handleInteraction(null,e.key); //if user use keyboard
 })

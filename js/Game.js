@@ -5,11 +5,11 @@
  class Game {
     constructor(){
         this.missed = 0;
-        this.phrases = this.createPharses(); 
+        this.phrases = this.createPhrases(); 
         this.activePhrase = null; 
     }
 
-    createPharses(){
+    createPhrases(){
         const phrases = [
             {
                 phrase: "I like Starbucks"
@@ -42,16 +42,16 @@
     }
     
     //belowing code handling button clicking
-    handleInteraction(button){
+    handleInteraction(button,key){
         //if the actived phrase does not includes the button's value, adds wrong class and disabled it
-        if(this.activePhrase.phrase.includes($(button).text()) === false){
+        if(button && (this.activePhrase.phrase.includes($(button).text()) === false)){
             $(button).addClass('wrong');
             $(button).prop('disabled', true);
             this.removeLife(); //remove one life
         } 
 
         //if the actived phrase includes button value, add a class choosen, disable it
-        if(this.activePhrase.phrase.includes($(button).text())){
+        if(button && this.activePhrase.phrase.includes($(button).text())){
             $(button).addClass('chosen');
             $(button).prop('disabled', true); 
             this.activePhrase.showMatchedLetter($(button).text()); //show the matched letter 
@@ -59,24 +59,23 @@
                 this.gameOver(true); //if win, call gameover()
             };
         }
-        
-    }
-    
-    //belowing code handling keyboard typing, same code most as above
-    handleInteractionKeyboard(key){
-        
-        if(this.activePhrase.phrase.includes(key) === false){
+
+        //following part of code handles keyboard 
+        if(key && (this.activePhrase.phrase.includes(key) === false)){
             $(".keyrow button").each((index, element)=>{
                 if($(element).text()===key){
                     $(element).addClass('wrong');
-                    $(element).prop('disabled', true);
+                    //if disabled, u can't remove life anymore, only remove once
+                    if(!$(element).is(":disabled")){
+                        this.removeLife();
+                    }
+                    $(element).prop('disabled', true); 
                 }
             })
-            this.removeLife();
         } 
 
 
-        if(this.activePhrase.phrase.includes(key)){
+        if(key && this.activePhrase.phrase.includes(key)){
 
             $(".keyrow button").each((index, element)=>{
                 if($(element).text()===key){
@@ -94,7 +93,6 @@
         
     }
     
-
 
     checkForWin(){
         let count = 0;
